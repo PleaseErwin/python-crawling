@@ -64,7 +64,7 @@ for key in fanfic_list.keyword:
     # pdf 파일 만들기
     pdf = FPDF()
     pdf.add_page()
-    pdf.add_font('ArialUnicodeMS', '', 'C:/inflearn_2022/Arial-Unicode-Regular.ttf', uni=True)
+    pdf.add_font('ArialUnicodeMS', '', 'C:/inflearn_2022/make_fanfics_pdf/Arial-Unicode-Regular.ttf', uni=True)
     pdf.set_font('ArialUnicodeMS', '', size=11)
 
     for fanfic in fanfics:
