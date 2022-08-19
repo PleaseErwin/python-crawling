@@ -82,7 +82,8 @@ for key in fanfic_list.keyword:
         pdf.multi_cell(0, 10, txt = content_head.text, align = 'C')
 
     new_title = key.replace('-중장', '')
-    pdf.output(f"{new_title}.pdf", 'F')
+    file_path = f'C:/inflearn_2022/make_fanfics_pdf/fanfics/long/{new_title}'
+    pdf.output(f"{file_path}.pdf", 'F')
 
 # 최종본
 # 셀레니움으로 시작해서 로그인
