@@ -1,4 +1,3 @@
-from timeit import repeat
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -81,11 +80,11 @@ for index in page:
         content_soup = BeautifulSoup(content_html, 'html.parser')
         content_head = content_soup.find("div", attrs={"class":"cntBody"})
 
+        new_title = re.sub('[/:*?"<>\n\r\t]', "", title)
         # pdf 내용 쓰기
-        pdf.multi_cell(0, 10, txt = title, align = 'L')
+        pdf.multi_cell(0, 10, txt = new_title, align = 'L')
         pdf.multi_cell(0, 10, txt = content_head.text, align = 'C')
 
-        new_title = re.sub('[/:*?"<>\n\r\t]', "", title)
         file_path = f'C:/inflearn_2022/make_fanfics_pdf/fanfics/short/{new_title}'
         pdf.output(f"{file_path}.pdf", 'F')
 
@@ -94,3 +93,7 @@ for index in page:
 # OSError: [Errno 22] Invalid argument: 'C:/inflearn_2022/make_fanfics_pdf/fanfics/short/\r\n\t\t    \t\t\t
 # >>> re.sub 정규식으로 제목에서 \n\r\t 제외해서 해결
 # 해결했다고 생각했더니 pdf파일에 이상한 네모 특수문자 발견
+# >>> 정규식으로 특수문자를 제외한 new_title을 파일 이름뿐만이 아니라 pdf에도 적용해서 문제 해결
+
+# IndexError: list index out of range
+# 🧊🐿 같은 아이콘 때문에 그런 것으로 보임

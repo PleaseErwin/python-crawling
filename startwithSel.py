@@ -81,7 +81,7 @@ for key in fanfic_list.keyword:
         pdf.multi_cell(0, 10, txt = title, align = 'L')
         pdf.multi_cell(0, 10, txt = content_head.text, align = 'C')
 
-    new_title = key.replace('-중장', '')
+    new_title = key.replace('-아오삼', '')
     file_path = f'C:/inflearn_2022/make_fanfics_pdf/fanfics/long/{new_title}'
     pdf.output(f"{file_path}.pdf", 'F')
 
@@ -100,3 +100,7 @@ for key in fanfic_list.keyword:
 
 # in _putTTfontwidths - if (font['cw'][cid] == 0):IndexError: list index out of range
 # >>> fpdf can't ignore characters which can't print / 같은 오류를 겪는 사람들 발견
+
+# title에 align = 'L'이 안 먹히던 오류
+# title 왼쪽에 공백이 있어서 그런 것으로 보임
+# search_bookmark.py처럼 re.sub('[/:*?"<>\n\r\t]', "", title)를 적용하면 해결될 듯
