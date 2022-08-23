@@ -58,7 +58,7 @@ print("keyword", keyword)
 # 오류난 fanfic 제목을 저장하는 파일
 f = open('../error.txt', 'a', encoding='utf-8', newline='')# 기존에 있던 내용에 이어서 쓰는 옵션 a
 
-for index in page:
+for index in range(1, page + 1):
     response = session.get(f"https://hygall.com/index.php?mid=hy&act=dispMemberScrappedDocument&search_target=title_content&search_keyword={keyword}&page={index}", headers=nextHeader)
     
     # 북마크 페이지 하나
