@@ -1,4 +1,5 @@
 fanfics/
+__pycache__/
 login_info.py
 fanfic_list.py
 test.py
