@@ -64,7 +64,7 @@ for key in fanfic_list.keyword:
     # pdf 파일 만들기
     pdf = FPDF()
     pdf.add_page()
-    pdf.add_font('ArialUnicodeMS', '', 'C:/inflearn_2022/make_fanfics_pdf/Arial-Unicode-Regular.ttf', uni=True)
+    pdf.add_font('ArialUnicodeMS', '', '../Arial-Unicode-Regular.ttf', uni=True)
     pdf.set_font('ArialUnicodeMS', '', size=11)
 
     for fanfic in fanfics:
@@ -82,7 +82,7 @@ for key in fanfic_list.keyword:
         pdf.multi_cell(0, 10, txt = content_head.text, align = 'C')
 
     new_title = key.replace('-아오삼', '')
-    file_path = f'C:/inflearn_2022/make_fanfics_pdf/fanfics/long/{new_title}'
+    file_path = f'../fanfics/long/{new_title}'
     pdf.output(f"{file_path}.pdf", 'F')
 
 # 최종본
@@ -104,3 +104,6 @@ for key in fanfic_list.keyword:
 # title에 align = 'L'이 안 먹히던 오류
 # title 왼쪽에 공백이 있어서 그런 것으로 보임
 # search_bookmark.py처럼 re.sub('[/:*?"<>\n\r\t]', "", title)를 적용하면 해결될 듯
+
+# 절대경로에서 상대경로로 바꾸니 폰트 파일 인식이 안 되던 오류
+# >>> 현재 작업하고 있는 폴더를 py파일이 위치한 src로 바꿨더니 해결

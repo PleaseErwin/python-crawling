@@ -56,7 +56,7 @@ page = int(pyautogui.prompt("페이지 수 입력"))
 print("keyword", keyword)
 
 # 오류난 fanfic 제목을 저장하는 파일
-f = open('error.txt', 'a', encoding='utf-8', newline='')# 기존에 있던 내용에 이어서 쓰는 옵션 a
+f = open('../error.txt', 'a', encoding='utf-8', newline='')# 기존에 있던 내용에 이어서 쓰는 옵션 a
 
 for index in page:
     response = session.get(f"https://hygall.com/index.php?mid=hy&act=dispMemberScrappedDocument&search_target=title_content&search_keyword={keyword}&page={index}", headers=nextHeader)
@@ -72,7 +72,7 @@ for index in page:
             # pdf 파일 만들기
             pdf = FPDF()
             pdf.add_page()
-            pdf.add_font('ArialUnicodeMS', '', 'C:/inflearn_2022/make_fanfics_pdf/Arial-Unicode-Regular.ttf', uni=True)
+            pdf.add_font('ArialUnicodeMS', '', '../Arial-Unicode-Regular.ttf', uni=True)
             pdf.set_font('ArialUnicodeMS', '', size=11)
 
             title = fanfic.text
@@ -88,7 +88,7 @@ for index in page:
             pdf.multi_cell(0, 10, txt = new_title, align = 'L')
             pdf.multi_cell(0, 10, txt = content_head.text, align = 'C')
 
-            file_path = f'C:/inflearn_2022/make_fanfics_pdf/fanfics/short/{new_title}'
+            file_path = f'../fanfics/short/{new_title}'
             pdf.output(f"{file_path}.pdf", 'F')
         except IndexError:# 범위를 벗어난 인덱스에 접근하여 에러가 발생했을 때 실행됨
             f.write(new_title)
