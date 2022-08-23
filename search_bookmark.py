@@ -56,9 +56,9 @@ page = int(pyautogui.prompt("페이지 수 입력"))
 print("keyword", keyword)
 
 # 오류난 fanfic 제목을 저장하는 파일
-f = open('error.txt', 'w', encoding='utf-8', newline='')
+f = open('error.txt', 'a', encoding='utf-8', newline='')# 기존에 있던 내용에 이어서 쓰는 옵션 a
 
-for index in (2, page):
+for index in page:
     response = session.get(f"https://hygall.com/index.php?mid=hy&act=dispMemberScrappedDocument&search_target=title_content&search_keyword={keyword}&page={index}", headers=nextHeader)
     
     # 북마크 페이지 하나
@@ -106,3 +106,6 @@ for index in (2, page):
 
 # 페이지가 제대로 넘어가지 않는 오류
 # pyautogui로 입력한 숫자가 string이므로 int로 변환해서 해결
+
+# error.txt 파일이 초기화됨
+# open 함수의 옵션을 w에서 a로 바꾸는 것으로 해결
