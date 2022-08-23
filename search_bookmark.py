@@ -52,13 +52,13 @@ session.cookies.update(cookie_dict)
 # 로그인 후 세션 유지
 
 keyword = pyautogui.prompt("키워드 입력")
-page = pyautogui.prompt("페이지 수 입력")
+page = int(pyautogui.prompt("페이지 수 입력"))
 print("keyword", keyword)
 
 # 오류난 fanfic 제목을 저장하는 파일
 f = open('error.txt', 'w', encoding='utf-8', newline='')
 
-for index in page:
+for index in (2, page):
     response = session.get(f"https://hygall.com/index.php?mid=hy&act=dispMemberScrappedDocument&search_target=title_content&search_keyword={keyword}&page={index}", headers=nextHeader)
     
     # 북마크 페이지 하나
@@ -103,3 +103,6 @@ for index in page:
 # IndexError: list index out of range
 # 🧊🐿 같은 아이콘 때문에 그런 것으로 보임
 # >>> try except로 예외 처리하고 error.txt에 오류난 fanfic 제목들을 써서 추후 따로 pdf화하는 것으로 해결
+
+# 페이지가 제대로 넘어가지 않는 오류
+# pyautogui로 입력한 숫자가 string이므로 int로 변환해서 해결
