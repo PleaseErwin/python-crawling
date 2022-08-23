@@ -72,7 +72,7 @@ for index in page:
             # pdf 파일 만들기
             pdf = FPDF()
             pdf.add_page()
-            pdf.add_font('ArialUnicodeMS', '', '../Arial-Unicode-Regular.ttf', uni=True)
+            pdf.add_font('ArialUnicodeMS', '', '../font/Arial-Unicode-Regular.ttf', uni=True)
             pdf.set_font('ArialUnicodeMS', '', size=11)
 
             title = fanfic.text
