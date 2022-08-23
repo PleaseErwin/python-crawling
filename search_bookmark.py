@@ -55,6 +55,9 @@ keyword = pyautogui.prompt("키워드 입력")
 page = pyautogui.prompt("페이지 수 입력")
 print("keyword", keyword)
 
+# 오류난 fanfic 제목을 저장하는 파일
+f = open('error.txt', 'w', encoding='utf-8', newline='')
+
 for index in page:
     response = session.get(f"https://hygall.com/index.php?mid=hy&act=dispMemberScrappedDocument&search_target=title_content&search_keyword={keyword}&page={index}", headers=nextHeader)
     
@@ -65,28 +68,30 @@ for index in page:
     fanfics = body.find_all("a", attrs={"class":"document_title"})
 
     for fanfic in fanfics:
+        try:
+            # pdf 파일 만들기
+            pdf = FPDF()
+            pdf.add_page()
+            pdf.add_font('ArialUnicodeMS', '', 'C:/inflearn_2022/make_fanfics_pdf/Arial-Unicode-Regular.ttf', uni=True)
+            pdf.set_font('ArialUnicodeMS', '', size=11)
 
-        # pdf 파일 만들기
-        pdf = FPDF()
-        pdf.add_page()
-        pdf.add_font('ArialUnicodeMS', '', 'C:/inflearn_2022/make_fanfics_pdf/Arial-Unicode-Regular.ttf', uni=True)
-        pdf.set_font('ArialUnicodeMS', '', size=11)
+            title = fanfic.text
+            print(title)
 
-        title = fanfic.text
-        print(title)
+            content = session.get(fanfic['href'], headers=nextHeader)
+            content_html = content.text
+            content_soup = BeautifulSoup(content_html, 'html.parser')
+            content_head = content_soup.find("div", attrs={"class":"cntBody"})
 
-        content = session.get(fanfic['href'], headers=nextHeader)
-        content_html = content.text
-        content_soup = BeautifulSoup(content_html, 'html.parser')
-        content_head = content_soup.find("div", attrs={"class":"cntBody"})
+            new_title = re.sub('[/:*?"<>\n\r\t]', "", title)
+            # pdf 내용 쓰기
+            pdf.multi_cell(0, 10, txt = new_title, align = 'L')
+            pdf.multi_cell(0, 10, txt = content_head.text, align = 'C')
 
-        new_title = re.sub('[/:*?"<>\n\r\t]', "", title)
-        # pdf 내용 쓰기
-        pdf.multi_cell(0, 10, txt = new_title, align = 'L')
-        pdf.multi_cell(0, 10, txt = content_head.text, align = 'C')
-
-        file_path = f'C:/inflearn_2022/make_fanfics_pdf/fanfics/short/{new_title}'
-        pdf.output(f"{file_path}.pdf", 'F')
+            file_path = f'C:/inflearn_2022/make_fanfics_pdf/fanfics/short/{new_title}'
+            pdf.output(f"{file_path}.pdf", 'F')
+        except IndexError:# 범위를 벗어난 인덱스에 접근하여 에러가 발생했을 때 실행됨
+            f.write(new_title)
 
 
 # 오류
@@ -97,3 +102,4 @@ for index in page:
 
 # IndexError: list index out of range
 # 🧊🐿 같은 아이콘 때문에 그런 것으로 보임
+# >>> try except로 예외 처리하고 error.txt에 오류난 fanfic 제목들을 써서 추후 따로 pdf화하는 것으로 해결
