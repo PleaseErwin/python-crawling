@@ -52,13 +52,13 @@ session.cookies.update(cookie_dict)
 # 로그인 후 세션 유지
 
 keyword = pyautogui.prompt("키워드 입력")
-page = int(pyautogui.prompt("페이지 수 입력"))
-print("keyword", keyword)
+start_page = int(pyautogui.prompt("시작 페이지 수 입력"))
+end_page = int(pyautogui.prompt("끝 페이지 수 입력"))
 
 # 오류난 fanfic 제목을 저장하는 파일
 f = open('../error.txt', 'a', encoding='utf-8', newline='')# 기존에 있던 내용에 이어서 쓰는 옵션 a
 
-for index in range(1, page + 1):
+for index in range(start_page, end_page + 1):
     response = session.get(f"https://hygall.com/index.php?mid=hy&act=dispMemberScrappedDocument&search_target=title_content&search_keyword={keyword}&page={index}", headers=nextHeader)
     
     # 북마크 페이지 하나
