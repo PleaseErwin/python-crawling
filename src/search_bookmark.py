@@ -7,6 +7,7 @@ from fpdf import FPDF
 import time
 import pyautogui
 import login_info
+import address
 import re
 
 options = webdriver.ChromeOptions()
@@ -14,7 +15,7 @@ options = webdriver.ChromeOptions()
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36")
 
 browser = webdriver.Chrome('C:/chromedriver.exe', options=options)
-browser.get('https://hygall.com/')
+browser.get(address.main)
 browser.implicitly_wait(5)
 
 # 로그인
@@ -41,7 +42,7 @@ session = requests.Session()
 
 header = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
-    'referer':'https://hygall.com/index.php?mid=hy&act=dispMemberLoginForm'
+    'referer': address.login_referer
 }
 nextHeader = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
@@ -59,7 +60,7 @@ end_page = int(pyautogui.prompt("끝 페이지 수 입력"))
 f = open('../error.txt', 'a', encoding='utf-8', newline='')# 기존에 있던 내용에 이어서 쓰는 옵션 a
 
 for index in range(start_page, end_page + 1):
-    response = session.get(f"https://hygall.com/index.php?mid=hy&act=dispMemberScrappedDocument&search_target=title_content&search_keyword={keyword}&page={index}", headers=nextHeader)
+    response = session.get(address.bookmark_search(keyword, index), headers=nextHeader)
     
     # 북마크 페이지 하나
     html = response.text

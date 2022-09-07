@@ -7,6 +7,7 @@ from fpdf import FPDF
 import time
 import fanfic_list
 import login_info
+import address
 
 options = webdriver.ChromeOptions()
 # options.headless = True
@@ -15,7 +16,7 @@ options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) Apple
 
 browser = webdriver.Chrome('C:/chromedriver.exe', options=options)
 # browser.maximize_window()
-browser.get('https://hygall.com/') # 웹사이트 열기
+browser.get(address.main) # 웹사이트 열기
 browser.implicitly_wait(5) # 로딩이 끝날 때까지 5초까지는 기다려 줌
 
 # 로그인
@@ -37,7 +38,7 @@ browser.implicitly_wait(3)
 
 # search = browser.find_element_by_name('search_keyword')
 # search.click()
-# search.send_keys('뱃슨뱃')
+# search.send_keys('')
 # search.send_keys(Keys.ENTER)
 # browser.implicitly_wait(3)
 
@@ -69,7 +70,7 @@ for key in fanfic_list.keyword:
         # pdf 파일 만들기
         pdf = FPDF()
         pdf.add_page()
-        pdf.add_font('ArialUnicodeMS', '', 'C:/inflearn_2022/Arial-Unicode-Regular.ttf', uni=True)
+        pdf.add_font('ArialUnicodeMS', '', '../font/Arial-Unicode-Regular.ttf', uni=True)
         pdf.set_font('ArialUnicodeMS', '', size=15)
         pdf.multi_cell(0, 10, txt = fanfic.text, align = 'C')
         pdf.multi_cell(0, 10, txt = content_head.text, align = 'C')

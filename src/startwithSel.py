@@ -7,6 +7,7 @@ from fpdf import FPDF
 import time
 import fanfic_list
 import login_info
+import address
 
 options = webdriver.ChromeOptions()
 # options.headless = True
@@ -15,7 +16,7 @@ options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) Apple
 
 browser = webdriver.Chrome('C:/chromedriver.exe', options=options)
 # browser.maximize_window()
-browser.get('https://hygall.com/') # 웹사이트 열기
+browser.get(address.main) # 웹사이트 열기
 browser.implicitly_wait(5) # 로딩이 끝날 때까지 5초까지는 기다려 줌
 
 # 로그인
@@ -43,7 +44,7 @@ session = requests.Session()
 
 header = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
-    'referer':'https://hygall.com/index.php?mid=hy&act=dispMemberLoginForm'
+    'referer': address.login_referer
 }
 nextHeader = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
@@ -53,7 +54,7 @@ session.headers.update(header)
 session.cookies.update(cookie_dict)
 
 for key in fanfic_list.keyword:
-    response = session.get(f"https://hygall.com/?mid=hy&search_target=title_content&search_keyword={key}", headers=nextHeader)
+    response = session.get(address.main_search(key), headers=nextHeader)
     html = response.text
     soup = BeautifulSoup(html, 'html.parser') # 'lxml'
     body = soup.find("tbody")
@@ -95,7 +96,7 @@ for key in fanfic_list.keyword:
 # * 첫 페이지 글밖에 가져오지 못함
 
 # 오류
-# OSError: [Errno 22] Invalid argument: '아이스매브가 탑-건 이전에 이미 정략결혼한 사이라면??.pdf' 오류
+# OSError: [Errno 22] Invalid argument: '***특수문자가 들어간 제목***.pdf' 오류
 # >>> 저장 경로나 파일명에 사용할 수 없는 특수문자를 사용했기 때문에 발생
 
 # in _putTTfontwidths - if (font['cw'][cid] == 0):IndexError: list index out of range
