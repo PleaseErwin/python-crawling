@@ -8,6 +8,7 @@ import time
 import fanfic_list
 import login_info
 import address
+import re
 
 options = webdriver.ChromeOptions()
 # options.headless = True
@@ -79,10 +80,12 @@ for key in fanfic_list.keyword:
         content_head = content_soup.find("div", attrs={"class":"cntBody"})
 
         # pdf 내용 쓰기
-        pdf.multi_cell(0, 10, txt = title, align = 'L')
+        new_title = re.sub('[\n\r\t]', "", title)
+        pdf.multi_cell(0, 10, txt = new_title, align = 'L')
         pdf.multi_cell(0, 10, txt = content_head.text, align = 'C')
 
-    new_title = key.replace('-아오삼', '')
+    sliced_title = key.partition('-')[0]
+    new_title = re.sub('[/:*?"<>\n\r\t]', "", sliced_title)
     file_path = f'../fanfics/long/{new_title}'
     pdf.output(f"{file_path}.pdf", 'F')
 

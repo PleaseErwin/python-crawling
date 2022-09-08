@@ -84,7 +84,8 @@ for index in range(start_page, end_page + 1):
             content_soup = BeautifulSoup(content_html, 'html.parser')
             content_head = content_soup.find("div", attrs={"class":"cntBody"})
 
-            new_title = re.sub('[/:*?"<>\n\r\t]', "", title)
+            sliced_title = title.partition('-')[0]
+            new_title = re.sub('[/:*?"<>\n\r\t]', "", sliced_title)
             # pdf 내용 쓰기
             pdf.multi_cell(0, 10, txt = new_title, align = 'L')
             pdf.multi_cell(0, 10, txt = content_head.text, align = 'C')
