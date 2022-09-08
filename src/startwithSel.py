@@ -82,7 +82,7 @@ for key in fanfic_list.keyword:
         # pdf 내용 쓰기
         new_title = re.sub('[\n\r\t]', "", title)
         pdf.multi_cell(0, 10, txt = new_title, align = 'L')
-        pdf.multi_cell(0, 10, txt = content_head.text, align = 'C')
+        pdf.multi_cell(0, 10, txt = content_head.text, align = 'L')
 
     sliced_title = key.partition('-')[0]
     new_title = re.sub('[/:*?"<>\n\r\t]', "", sliced_title)
